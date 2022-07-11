@@ -1,6 +1,6 @@
-# create-svelte
+# Przepisowo
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Przepisowo to aplikacja pomagająca znaleźć przepisy kulinarne które możesz wykonać z składników dostępnych w twoim domu.
 
 ## Creating a project
 

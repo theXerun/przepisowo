@@ -4,7 +4,7 @@
 	const nav = [
 		{ title: 'Strona Główna', path: '/' },
 		{ title: 'Moja Lodówka', path: '/lodowka' },
-		{ title: 'Przepisy', path: '/przepisy' }
+		{ title: 'Wszystkie Przepisy', path: '/przepisy' }
 	];
 </script>
 
@@ -16,7 +16,7 @@
 
 <style lang="postcss">
 	nav {
-		@apply flex shadow-md py-4 mb-4 justify-center content-center;
+		@apply container flex shadow-md py-4 mb-4 mx-auto justify-center content-center;
 	}
 	a {
 		@apply flex flex-row p-4 mx-4 font-bold bg-white rounded-xl items-center text-center min-w-[48px] min-h-[48px];

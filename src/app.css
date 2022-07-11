@@ -3,17 +3,21 @@
 @tailwind utilities;
 
 h1 {
-    @apply text-2xl font-bold my-4;
+	@apply text-2xl font-bold my-4;
 }
 
 h2 {
-    @apply text-xl font-bold;
+	@apply text-xl font-bold;
 }
 
 h3 {
-    @apply text-lg font-bold;
+	@apply text-lg font-bold;
 }
 
 p {
-    @apply text-base;
+	@apply text-base;
+}
+
+main {
+	@apply container mx-auto px-4;
 }
