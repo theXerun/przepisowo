@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,8 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  uId Int @id @default(autoincrement())
-  email String @unique
-  password String
+model Fridges {
+  ingredientListId   Int         @default(autoincrement())
+  ingredientId       Int         @default(autoincrement())
+  ingredientQuantity Int         @default(autoincrement())
+  id                 Int         @id @default(autoincrement())
+  Ingredients        Ingredients @relation(fields: [ingredientId], references: [ingredientID], onDelete: NoAction, onUpdate: NoAction)
+  Users              Users       @relation(fields: [ingredientListId], references: [fridgeIngredientsId], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model IngredientList {
+  ingredientListId   Int         @default(autoincrement())
+  ingredientId       Int         @default(autoincrement())
+  ingredientQuantity Int         @default(autoincrement())
+  id                 Int         @id @default(autoincrement())
+  Ingredients        Ingredients @relation(fields: [ingredientId], references: [ingredientID], onDelete: NoAction, onUpdate: NoAction)
+  Recipes            Recipes     @relation(fields: [ingredientListId], references: [ingredientListId], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Ingredients {
+  ingredientID   Int              @id @default(autoincrement())
+  ingredientName String           @db.VarChar(32)
+  quantityType   String           @db.VarChar(20)
+  Fridges        Fridges[]
+  IngredientList IngredientList[]
+}
+
+model Recipes {
+  recipeId          Int              @id @default(autoincrement())
+  recipeSteps       String           @db.VarChar(1024)
+  recipeDescription String           @db.VarChar(280)
+  ingredientListId  Int              @unique(map: "ingredientListId") @default(autoincrement())
+  ownerId           Int              @default(autoincrement())
+  Users             Users            @relation(fields: [ownerId], references: [uId], onDelete: NoAction, onUpdate: NoAction, map: "uId")
+  IngredientList    IngredientList[]
+}
+
+model Users {
+  uId                 Int       @id @default(autoincrement())
+  username            String    @unique(map: "username") @db.VarChar(64)
+  password            String    @db.VarChar(64)
+  fridgeIngredientsId Int       @unique(map: "fridge") @default(autoincrement())
+  Fridges             Fridges[]
+  Recipes             Recipes[]
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import ThemeChange from './themeChange.svelte';
 
 	const nav = [
 		{ title: 'Strona Główna', path: '/' },
@@ -8,23 +9,28 @@
 	];
 </script>
 
-<nav>
-	{#each nav as item}
-		<a class:active={$page.url.pathname === item.path} href={item.path}>{item.title}</a>
-	{/each}
-</nav>
-
-<style lang="postcss">
-	nav {
-		@apply container flex shadow-md py-4 mb-4 mx-auto justify-center content-center;
-	}
-	a {
-		@apply flex flex-row p-4 mx-4 font-bold bg-white rounded-xl items-center text-center min-w-[48px] min-h-[48px];
-	}
-	a:hover {
-		@apply bg-blue-400 text-white transition-colors;
-	}
-	a.active {
-		@apply bg-blue-500 text-white;
-	}
-</style>
+<div class="navbar bg-base-100">
+	<div class="navbar-start">
+	  <div class="dropdown">
+		<label tabindex="0" class="btn btn-ghost md:hidden">
+		  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+		</label>
+		<ul tabindex="0" class="menu menu-normal dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+			{#each nav as item}
+			<li><a class:active={$page.url.pathname === item.path} href={item.path}>{item.title}</a></li>
+			{/each}
+		</ul>
+	  </div>
+	  <a class="btn btn-ghost normal-case text-xl" href="/">Przepisowo</a>
+	</div>
+	<div class="navbar-center hidden md:flex">
+	  <ul class="menu menu-horizontal p-0">
+		{#each nav as item}
+		<li><a class:active={$page.url.pathname === item.path} href={item.path}>{item.title}</a></li>
+		{/each}
+	  </ul>
+	</div>
+	<div>
+		<ThemeChange/>
+	</div>
+  </div>

@@ -1,39 +1,38 @@
 <script lang="ts">
-	// asynchroniczne + lazy loading
-	let recipes = [
-		{name: 'Przepis', description: 'Krótki opis'},
-		{name: 'Przepis', description: 'Krótki opis'},
-		{name: 'Przepis', description: 'Krótki opis'},
-		{name: 'Przepis', description: 'Krótki opis'},
-		{name: 'Przepis', description: 'Krótki opis'},
-		{name: 'Przepis', description: 'Krótki opis'},
-		{name: 'Przepis', description: 'Krótki opis'}
-	]	
+	import type { Prisma, Recipes } from "@prisma/client";
+
+
+	export let allRecipes: Recipes[];
+
+	const randomRecipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
+	
 </script>
 
 <main>
-	<h1>Może masz ochotę na:</h1>
-	<div class="przepiscard">
-		<h1>Losowo wybrany przepis</h1>
-		<p>Z tych możliwych do zrobienia</p>
-	</div>
-	<h2>Inne przepisy do wypróbowania:</h2>
-	<div class="przepisycontainer">
-		{#each recipes as recipe}
-		<div class="przepiscard">
-			<h1>{recipe.name}</h1>
-			<p>{recipe.description}</p>
+	<h1>Losowo wybrany przepis</h1>
+	<div class="flex flex-wrap gap-4 justify-center p-4">
+		<div class="card w-72 h-72 bg-base-100 shadow-xl">
+			<div class="card-body">
+				<h2 class="card-title">{randomRecipe.recipeDescription}</h2>
+				<p>{randomRecipe.recipeDescription}</p>
+				<div class="card-actions justify-end">
+				<button class="btn btn-primary">Zrób ten przepis!</button>
+				</div>
+			</div>
 		</div>
+	</div>
+	<h1>Przepisy do wypróbowania:</h1>
+	<div class="flex flex-wrap gap-4 justify-center p-4">
+		{#each allRecipes.slice(0,20) as recipe}
+		<div class="card w-72 h-72 bg-base-100 shadow-xl">
+			<div class="card-body">
+			  <h2 class="card-title">{recipe.recipeDescription}</h2>
+			  <p>{recipe.recipeDescription}</p>
+			  <div class="card-actions justify-end">
+				<button class="btn btn-primary">Zrób ten przepis!</button>
+			  </div>
+			</div>
+		  </div>
 		{/each}
-		
 	</div>
 </main>
-
-<style lang="postcss">
-	.przepiscard {
-		@apply flex flex-col p-4 my-4 shadow-md rounded-md max-w-3xl;
-	}
-	.przepisycontainer {
-		@apply flex flex-col my-4 py-4 px-2;
-	}
-</style>
