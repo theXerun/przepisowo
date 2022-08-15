@@ -2,7 +2,7 @@
   "name": "przepisowo",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
+    "dev": "vite dev",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -17,7 +17,9 @@
     "@playwright/test": "^1.21.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@types/cookie": "^0.5.1",
     "@types/node": "^18.0.3",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "autoprefixer": "^10.4.7",
@@ -39,7 +41,10 @@
   "type": "module",
   "dependencies": {
     "@prisma/client": "^3.13.0",
+    "cookie": "^0.5.0",
     "daisyui": "^2.19.0",
-    "theme-change": "^2.1.0"
+    "theme-change": "^2.1.0",
+    "uuid": "^8.3.2",
+    "vite": "^3.0.7"
   }
 }

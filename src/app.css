@@ -21,3 +21,7 @@ p {
 main {
 	@apply container mx-auto px-4;
 }
+
+body {
+	@apply h-screen;
+}

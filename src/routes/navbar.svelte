@@ -30,7 +30,7 @@
 		{/each}
 	  </ul>
 	</div>
-	<div>
+	<div class="navbar-end px-4">
 		<ThemeChange/>
 	</div>
   </div>
