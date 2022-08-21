@@ -5,7 +5,7 @@
 	const nav = [
 		{ title: 'Strona Główna', path: '/' },
 		{ title: 'Moja Lodówka', path: '/lodowka' },
-		{ title: 'Wszystkie Przepisy', path: '/przepisy' }
+		{ title: 'Wszystkie Przepisy', path: '/wszystkie-przepisy' }
 	];
 </script>
 

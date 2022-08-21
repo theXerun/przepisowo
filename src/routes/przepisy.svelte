@@ -2,11 +2,14 @@
 	import type { Recipes } from "@prisma/client";
 
 	export let allRecipes: Recipes[];
-
 	const randomRecipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
 </script>
 
 <main>
+	{#if allRecipes.length === 0}
+		<h1>Brak przepisów :C</h1>
+		<p>Dodaj rzeczy do lodówki żeby móc coś ugotować</p>
+	{:else}
 	<h1>Losowo wybrany przepis</h1>
 	<div class="flex flex-wrap gap-4 justify-center p-4">
 		<div class="card w-72 h-72 bg-base-100 shadow-xl">
@@ -14,7 +17,7 @@
 				<h2 class="card-title">{randomRecipe.recipeDescription}</h2>
 				<p>{randomRecipe.recipeDescription}</p>
 				<div class="card-actions justify-end">
-					<button class="btn btn-primary">Zrób ten przepis!</button>
+					<a href="/przepis/{randomRecipe.recipeId}" class="btn btn-primary">Zrób ten przepis!</a>
 				</div>
 			</div>
 		</div>
@@ -27,10 +30,11 @@
 					<h2 class="card-title">{recipe.recipeDescription}</h2>
 					<p>{recipe.recipeDescription}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-primary">Zrób ten przepis!</button>
+						<a href="/przepis/{recipe.recipeId}" class="btn btn-primary">Zrób ten przepis!</a>
 					</div>
 				</div>
 			</div>
 		{/each}
 	</div>
+	{/if}
 </main>

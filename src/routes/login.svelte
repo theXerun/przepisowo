@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-  import { session } from '$app/stores';
+	import { session } from '$app/stores';
 	import LoginForm from '$lib/LoginForm.svelte';
 
 	let error: string;
@@ -13,7 +13,7 @@
 				'Content-Type': 'application/json'
 			}
 		});
-    const body = await response.json();
+		const body = await response.json();
 		if (response.ok) {
 			$session = body;
 			await goto('/');

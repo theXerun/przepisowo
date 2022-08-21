@@ -3,8 +3,9 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import type { RequestHandler } from '@sveltejs/kit';
 export const prisma = new PrismaClient();
 export type Session = {
-    id: string
-    login: String
+    id: string,
+    login: String,
+    userId: number
 }
 export let sessions: Session[] = [];
 
@@ -26,10 +27,11 @@ export const authenticate = async (login: String, password: String) => {
 //     return Promise.resolve(user);
 // };
 
-export const createSession = (login: String) => {
+export const createSession = (login: String, userId: number) => {
     const session: Session = {
      id: uuidv4(),
      login,
+     userId
     };
     sessions.push(session);
     return Promise.resolve(session);

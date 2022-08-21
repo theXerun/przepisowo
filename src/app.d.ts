@@ -8,10 +8,18 @@ interface SessionData {
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare namespace App {
-	//interface Locals {}
+	interface Locals {
+		user?: {
+			login: string,
+			userId: number
+		}
+	}
 	// interface Platform {}
 	interface Session {
-		user?: {login: string}
+		user?: {
+			login: string,
+			uid: number
+		}
 	}
 	// interface Stuff {}
 }
