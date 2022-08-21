@@ -54,7 +54,7 @@
 	{#each userIngredients as i, index}
 		<div class="card w-auto bg-base-100 shadow-xl">
 			<div class="card-body">
-				{#if errorText[index]}
+				{#if (errorText[index] && newValues[index]) }
 					{errorText[index]}
 				{/if}
 				<div class="flex flex-row place-content-around content-center items-center text">
@@ -63,13 +63,15 @@
 						type="text"
 						bind:value={newValues[index]}
 						placeholder="{i.ingredientQuantity} {i.Ingredients.quantityType}"
-						class="input input-ghost text-opacity-100 w-auto"
+						class="input input-bordered input-primary w-auto"
 					/>
 					{#if (newValues[index])}
+						<p class="pl-3">{i.Ingredients.quantityType}</p>
 						<button on:click={() => updateQuantity(index)} class="btn btn-primary">Potwierdź</button>
 					{/if}
 				</div>
 			</div>
 		</div>
 	{/each}
+	<div class="flex w-full items-center content-center justify-center p-10"><a href="/lodowka/dodaj" class="btn btn-primary">Dodaj</a></div>
 </main>
