@@ -1,19 +1,57 @@
-import { Prisma, PrismaClient, type Recipes } from '@prisma/client';
+import { Prisma, PrismaClient, type Fridges, type Recipes } from '@prisma/client';
 import type { RequestHandler } from '@sveltejs/kit';
 const prisma = new PrismaClient();
 
 export const GET: RequestHandler = async ({ locals }) => {
 
     let userId: number = (!locals.user?.userId) ? 1 : locals.user.userId;
-    
-    // Nienatywne zapytanie ze względu na jego złożoność
-    // Dodatkowo rzutowane na typ Recipes[]
-    const allRecipes: Recipes[] = await prisma.$queryRaw`SELECT DISTINCT "recipeId", "recipeSteps", "recipeDescription", R."ingredientListId" FROM public."Recipes" R JOIN "IngredientList" IL on R."ingredientListId" = IL."ingredientListId" JOIN "Fridges" F on IL."ingredientId" = F."ingredientId" WHERE F."ingredientQuantity" >= IL."ingredientQuantity" AND F."ingredientListId" = ${userId}`;
+    const BreakError = {};
 
-    
+    const fridgeContent: Fridges[] = await prisma.fridges.findMany({
+        where: {
+            ingredientListId: userId
+        }
+    })
+
+    let findIngredientQuantityInFridge = (ingredientId: number) => {
+        let f = fridgeContent.find(e => e.ingredientId === ingredientId);
+        if (f) {
+            return f.ingredientQuantity;
+        }
+        return 0;
+    }
+
+    const allRecipes: Recipes[] = await prisma.recipes.findMany()
+    const doableRecipesPromise = async (): Promise<Recipes[]> => {
+        let tempResults: Recipes[] = [];
+
+        for (const recipe of allRecipes) {
+            const ingredients = await prisma.ingredientList.findMany({
+                where: {
+                    ingredientListId: recipe.ingredientListId
+                }
+            });
+            // Try catch żeby wyjść z pętli foreach
+            try {
+                ingredients.forEach(element => {
+                    if (element.ingredientQuantity > findIngredientQuantityInFridge(element.ingredientId)) {
+                        throw BreakError;
+                    }
+                });
+            } catch (err) {
+                if (err !== BreakError) throw err;
+                break;
+            }
+            tempResults.push(recipe);
+        }
+        return tempResults;
+    };
+
+    const doableRecipes = await doableRecipesPromise()
+
     return {
         headers: { 'Content-Type': 'application/json' },
         status: 200,
-        body: { allRecipes }
+        body: { doableRecipes }
     };
 }

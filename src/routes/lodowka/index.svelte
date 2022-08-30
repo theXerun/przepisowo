@@ -42,7 +42,13 @@
 		newValues[index] = '';
 		
 		if (response.ok) {
-			userIngredients[index] = updatedIngredient;
+			if (updatedIngredient.ingredientQuantity <= 0) {
+				userIngredients.splice(index,1)
+				console.log(userIngredients);
+				
+			} else {
+				userIngredients[index] = updatedIngredient;
+			}
 		}
 	};
 	
@@ -50,14 +56,14 @@
 
 <main>
 	<h1>Lodówka</h1>
-	<p>Tu będą produkty wraz z ilościami i możliwość ich dodawania, usuwania itd</p>
+	<p>Tutaj możesz modyfikować ilości składników. Wpisanie 0 jest równoznaczne z usunięciem.</p>
 	{#each userIngredients as i, index}
 		<div class="card w-auto bg-base-100 shadow-xl">
 			<div class="card-body">
 				{#if (errorText[index] && newValues[index]) }
 					{errorText[index]}
 				{/if}
-				<div class="flex flex-row place-content-around content-center items-center text">
+				<div class="flex flex-row flex-wrap place-content-around content-center items-center text">
 					<p>{index+1}</p><p>{i.Ingredients.ingredientName}</p>
 					<input
 						type="text"

@@ -25,12 +25,13 @@
 	let selected: Ingredients | undefined;
 	let errorText: String;
 	const addToFridge = async () => {
-		if (isNaN(Number(quantityInput))){
-			errorText = "Podana wartość nie jest liczbą"
-			return;
-		}
+		
 		if (selected === undefined) {
 			errorText = "Wybierz składnik";
+			return;
+		}
+		if (isNaN(Number(quantityInput))){
+			errorText = "Podana wartość nie jest liczbą"
 			return;
 		}
 		let quantity = Number(quantityInput);
@@ -53,7 +54,7 @@
 	{#if errorText}
 		<p class="text-error">{errorText}</p>
 	{/if}
-	<div class="flex flex-row place-content-around content-center items-center justify-center">
+	<div class="flex flex-row flex-wrap place-content-around content-center items-center justify-center">
 		<select bind:value={selected} class="select select-primary w-full max-w-xs">
 			<option disabled selected value={undefined}>Wybierz składnik</option>
 			{#each availableIngredientTypes as ingredient}
@@ -65,14 +66,14 @@
 			type="text"
 			bind:value={quantityInput}
 			placeholder="Ilość"
-			class="input input-bordered input-primary w-full"
+			class="input input-bordered input-primary w-full max-w-xs"
 		/>
 		{:else}
 		<input
 			type="text"
 			bind:value={quantityInput}
 			placeholder="Ilość w {selected.quantityType}"
-			class="input input-bordered input-primary w-full"
+			class="input input-bordered input-primary w-full max-w-xs"
 		/>
 		{/if}
 		<button on:click|preventDefault={addToFridge} class="btn btn-primary">Dodaj</button>

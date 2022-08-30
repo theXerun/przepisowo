@@ -20,7 +20,7 @@
 import type { Recipes } from "@prisma/client";
 
 import Przepisy from "./przepisy.svelte";
-export let allRecipes: Recipes[];
+export let doableRecipes: Recipes[];
 </script>
 
-<Przepisy {allRecipes} />
+<Przepisy {doableRecipes} />

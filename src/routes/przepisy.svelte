@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { Recipes } from "@prisma/client";
 
-	export let allRecipes: Recipes[];
-	const randomRecipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
+	export let doableRecipes: Recipes[];
+	const randomRecipe = doableRecipes[Math.floor(Math.random() * doableRecipes.length)];
 </script>
 
 <main>
-	{#if allRecipes.length === 0}
+	{#if doableRecipes.length === 0}
 		<h1>Brak przepisów :C</h1>
 		<p>Dodaj rzeczy do lodówki żeby móc coś ugotować</p>
 	{:else}
@@ -24,7 +24,7 @@
 	</div>
 	<h1>Przepisy do wypróbowania:</h1>
 	<div class="flex flex-wrap gap-4 justify-center p-4">
-		{#each allRecipes.slice(0, 20) as recipe}
+		{#each doableRecipes.slice(0, 20) as recipe}
 			<div class="card w-72 h-72 bg-base-100 shadow-xl">
 				<div class="card-body">
 					<h2 class="card-title">{recipe.recipeDescription}</h2>

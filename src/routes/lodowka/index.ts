@@ -34,6 +34,14 @@ export const POST: RequestHandler = async ( { request, locals }) => {
     } = await request.json();
     
     let userId: number = (!locals.user?.userId) ? 1 : locals.user.userId;
+    if (item.ingredientQuantity <= 0) {
+        const removeIngredient = await prisma.fridges.deleteMany({
+            where: {
+                ingredientId: item.Ingredients.ingredientID,
+                ingredientListId: userId
+            }
+        })
+    }
     const updateIngredient = await prisma.fridges.updateMany({
         where: {
             ingredientId: item.Ingredients.ingredientID,
