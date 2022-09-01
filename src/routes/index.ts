@@ -6,10 +6,15 @@ export const GET: RequestHandler = async ({ locals }) => {
 
     let userId: number = (!locals.user?.userId) ? 1 : locals.user.userId;
     const BreakError = {};
+    const user = await prisma.users.findUnique({
+        where: {
+            uId: userId
+        }
+    })
 
     const fridgeContent: Fridges[] = await prisma.fridges.findMany({
         where: {
-            ingredientListId: userId
+            ingredientListId: user?.fridgeIngredientsId
         }
     })
 
@@ -40,7 +45,7 @@ export const GET: RequestHandler = async ({ locals }) => {
                 });
             } catch (err) {
                 if (err !== BreakError) throw err;
-                break;
+                continue;
             }
             tempResults.push(recipe);
         }

@@ -7,7 +7,7 @@ onMount(() => {
   themeChange(false)
 })
 </script>
-<label class="swap swap-rotate">
+<label class="swap swap-rotate px-4">
   
   <!-- this hidden checkbox controls the state -->
   <input type="checkbox" data-toggle-theme="cmyk,dark" data-act-class="ACTIVECLASS"/>

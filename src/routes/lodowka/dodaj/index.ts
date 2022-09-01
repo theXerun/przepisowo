@@ -4,11 +4,16 @@ const prisma = new PrismaClient();
 
 export const GET: RequestHandler = async ({locals}) => {
     let userId: number = (!locals.user?.userId) ? 1 : locals.user.userId;
+    const user = await prisma.users.findUnique({
+        where: {
+            uId: userId
+        }
+    })
     const availableIngredientTypes = await prisma.ingredients.findMany({
         where:{
             Fridges: {
                 none: {
-                    ingredientListId: userId
+                    ingredientListId: user?.fridgeIngredientsId
                 }
             }
         },
@@ -29,11 +34,17 @@ export const POST: RequestHandler = async ( {request, locals} ) => {
         quantity: number
     } = await request.json();
     
+    const user = await prisma.users.findUnique({
+        where: {
+            uId: userId
+        }
+    })
+    
     const addIngredient = await prisma.fridges.create({
         data: {
-            ingredientListId: userId,
+            ingredientListId: user?.fridgeIngredientsId,
             ingredientId: newIngredient.selected.ingredientID,
-            ingredientQuantity: newIngredient.quantity
+            ingredientQuantity: newIngredient.quantity,
         }
     })
     

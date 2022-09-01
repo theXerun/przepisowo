@@ -10,9 +10,15 @@ export const GET: RequestHandler = async ({locals}) => {
         doable: boolean
     }
 
+    const user = await prisma.users.findUnique({
+        where: {
+            uId: userId
+        }
+    })
+
     const fridgeContent: Fridges[] = await prisma.fridges.findMany({
         where: {
-            ingredientListId: userId
+            ingredientListId: user?.fridgeIngredientsId
         }
     })
 
@@ -52,7 +58,7 @@ export const GET: RequestHandler = async ({locals}) => {
                     doable: false
                 };
                 tempResults.push(res);
-                break;
+                continue;
             }
             const res: Recipes & Doable = {
                 recipeId: recipe.recipeId,

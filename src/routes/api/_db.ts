@@ -20,12 +20,22 @@ export const authenticate = async (login: String, password: String) => {
     return Promise.resolve(existingUser);
 };
 
-// export const registerUser = (user) => {
-//     const existingUser = users.find((u) => u.email === user.email);
-//     if (!!existingUser) return Promise.reject(new Error('User already exists'));
-//     users.push(user);
-//     return Promise.resolve(user);
-// };
+export const registerUser = async (login: String, password: String) => {
+    let existingUser = await prisma.users.findFirst({
+        where: {
+            username: login.toString(),
+            password: password.toString()
+        }
+    });
+    if (existingUser) return Promise.reject(new Error('Użytkownik już istnieje'));
+    const user = await prisma.users.create({
+        data: {
+            username: login.toString(),
+            password: password.toString()
+        }
+    })
+    return Promise.resolve(user);
+};
 
 export const createSession = (login: String, userId: number) => {
     const session: Session = {

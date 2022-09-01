@@ -4,6 +4,11 @@ const prisma = new PrismaClient();
 
 export const GET: RequestHandler = async ({ params, locals }) => {
     let userId: number = (!locals.user?.userId) ? 1 : locals.user.userId;
+    const user = await prisma.users.findUnique({
+        where: {
+            uId: userId
+        }
+    })
     const recipe = await prisma.recipes.findUnique({
         where: {
             recipeId: Number(params.id)
@@ -32,7 +37,7 @@ export const GET: RequestHandler = async ({ params, locals }) => {
 
     const fridgeContent = await prisma.fridges.findMany({
         where: {
-            ingredientListId: userId,
+            ingredientListId: user?.fridgeIngredientsId,
             ingredientId: {
                 in: ingredientIds
             }
