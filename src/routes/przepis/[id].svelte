@@ -34,7 +34,6 @@
 			body: JSON.stringify(recipe.recipeId)
 		});
         if (response.ok){
-            console.log("OK")
 			await goto("/")
         }
     }

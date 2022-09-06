@@ -44,7 +44,6 @@
 		if (response.ok) {
 			if (updatedIngredient.ingredientQuantity <= 0) {
 				userIngredients.splice(index,1)
-				console.log(userIngredients);
 				
 			} else {
 				userIngredients[index] = updatedIngredient;

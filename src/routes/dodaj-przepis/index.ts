@@ -26,7 +26,6 @@ export const POST: RequestHandler = async ({request, locals}) => {
         selectedIngredients: (Ingredients & quantity)[]
     } = await request.json();
 
-    console.log(data.selectedIngredients);
     const maxRecipeId = await prisma.recipes.aggregate({
         _max: {
             recipeId: true

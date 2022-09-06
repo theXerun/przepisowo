@@ -40,11 +40,7 @@ export const POST: RequestHandler =async ({params, request, locals}) => {
         });
         
     });
-    
 
-    //console.log(updateFridge);
-    
-    
     return {
         status: 200
     }
