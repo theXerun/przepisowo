@@ -21,12 +21,13 @@
 		quantity: number;
 	}
 	import type { Ingredients } from '@prisma/client';
+	import { goto } from '$app/navigation';
 	let selected: Ingredients | undefined;
 	export let ingredients: Ingredients[];
 	let selectedIngredients: (Ingredients & quantity)[] = [];
 	let selectedIngredientId: number;
 	let selectedIngredientQuantity: number;
-    let recipeTitle: string;
+	let recipeTitle: string;
 	let recipeSteps: string;
 	let errorText: string;
 
@@ -81,54 +82,61 @@
 	};
 	const addRecipe = async () => {
 		if (!recipeTitle) {
-			errorText = "Wpisz tytuł przepisu";
+			errorText = 'Wpisz tytuł przepisu';
 			return;
 		}
 		if (recipeTitle.length > 280) {
-			errorText = "Za długi tytuł";
+			errorText = 'Za długi tytuł';
 			return;
 		}
 		if (!recipeSteps) {
-			errorText = "Musisz napisać jak wykonać przepis";
+			errorText = 'Musisz napisać jak wykonać przepis';
 			return;
 		}
-		if(recipeSteps.length > 1024) {
-			errorText = "Zbyt długi opis wykonania przepisu";
+		if (recipeSteps.length > 1024) {
+			errorText = 'Zbyt długi opis wykonania przepisu';
 			return;
 		}
 		if (selectedIngredients.length == 0) {
-			errorText = "Dodaj składniki";
+			errorText = 'Dodaj składniki';
 			return;
 		}
-		errorText = "";
+		errorText = '';
 
 		const response = await fetch('/dodaj-przepis', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({recipeTitle, recipeSteps, selectedIngredients})
+			body: JSON.stringify({ recipeTitle, recipeSteps, selectedIngredients })
 		});
 
-		selectedIngredients = selectedIngredients
+		selectedIngredients = selectedIngredients;
 
 		if (response.ok) {
-			console.log("OK");
+			await goto('/wszystkie-przepisy');
 			return;
 		}
-		console.log("NIE OK")
-	}
+		console.log('Błąd serwera');
+	};
 </script>
 
 <main>
 	{#if errorText}
 		<p class="text-error">{errorText}</p>
 	{/if}
-    <h1>Nazwa przepisu:</h1>
-    <div class="flex flex-row flex-wrap place-content-around content-center items-center justify-center">
-        <input type="text" placeholder="Wpisz nazwę przepisu" bind:value={recipeTitle} class="input input-bordered input-primary w-full max-w-xs" />
-    </div>
-    
+	<h1>Nazwa przepisu:</h1>
+	<div
+		class="flex flex-row flex-wrap place-content-around content-center items-center justify-center"
+	>
+		<input
+			type="text"
+			placeholder="Wpisz nazwę przepisu"
+			bind:value={recipeTitle}
+			class="input input-bordered input-primary w-full max-w-xs"
+		/>
+	</div>
+
 	<h1>Składniki:</h1>
 	<div class="overflow-x-auto w-1/2 max-w-sm">
 		<table class="table w-full">
@@ -192,12 +200,15 @@
 	</div>
 	<h1>Kroki:</h1>
 	<div class="flex place-content-around content-center items-center justify-center pt-16">
-		<textarea bind:value={recipeSteps}
+		<textarea
+			bind:value={recipeSteps}
 			class="textarea textarea-primary w-1/2"
 			placeholder="Tu wpisz jak zrobić ten przepis"
 		/>
 	</div>
-    <div class="flex flex-row flex-wrap place-content-around content-center items-center justify-center pt-16">
-        <button class="btn btn-primary" on:click|preventDefault={addRecipe}>Dodaj Przepis</button>
-    </div>
+	<div
+		class="flex flex-row flex-wrap place-content-around content-center items-center justify-center pt-16"
+	>
+		<button class="btn btn-primary" on:click|preventDefault={addRecipe}>Dodaj Przepis</button>
+	</div>
 </main>

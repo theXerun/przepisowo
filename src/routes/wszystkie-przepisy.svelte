@@ -27,6 +27,10 @@
 <main>
 	<h1>Wszystkie Przepisy:</h1>
 
+	<div class="flex flex-row content-end">
+		<a href="/dodaj-przepis" class="btn btn-primary">Dodaj swój przepis!</a>
+	</div>
+
 	<div class="flex flex-wrap gap-4 justify-center p-4">
 		{#each recipes as recipe}
             {#if !recipe.doable}

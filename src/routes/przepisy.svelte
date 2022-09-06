@@ -14,7 +14,7 @@
 	<div class="flex flex-wrap gap-4 justify-center p-4">
 		<div class="card w-72 h-72 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title">{randomRecipe.recipeDescription}</h2>
+				<h2 class="card-title">{randomRecipe.recipeDescription.slice(0,22)}</h2>
 				<p>{randomRecipe.recipeSteps.slice(0, 100)}</p>
 				<div class="card-actions justify-end">
 					<a href="/przepis/{randomRecipe.recipeId}" class="btn btn-primary">Zrób ten przepis!</a>
@@ -27,7 +27,7 @@
 		{#each doableRecipes.slice(0, 20) as recipe}
 			<div class="card w-72 h-72 bg-base-100 shadow-xl">
 				<div class="card-body">
-					<h2 class="card-title">{recipe.recipeDescription}</h2>
+					<h2 class="card-title">{recipe.recipeDescription.slice(0,22)}</h2>
 					<p>{recipe.recipeSteps.slice(0, 100)}</p>
 					<div class="card-actions justify-end">
 						<a href="/przepis/{recipe.recipeId}" class="btn btn-primary">Zrób ten przepis!</a>

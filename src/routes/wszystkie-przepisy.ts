@@ -30,7 +30,13 @@ export const GET: RequestHandler = async ({locals}) => {
         return 0;
     }
 
-    const allRecipes: Recipes[] = await prisma.recipes.findMany();
+    const allRecipes: Recipes[] = await prisma.recipes.findMany({
+        where: {
+            ownerId: {
+                in: [1, userId]
+            }
+        }
+    });
 
     const filterRecipes = async (): Promise<(Recipes & Doable)[]> => {
         let tempResults: (Recipes & Doable)[] = [];

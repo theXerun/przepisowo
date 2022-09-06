@@ -1,25 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import ThemeChange from './themeChange.svelte';
-	// import { loggedIn, logOut } from './stores';
-	// import { goto } from '$app/navigation';
 	const nav = [
 		{ title: 'Strona Główna', path: '/' },
 		{ title: 'Moja Lodówka', path: '/lodowka' },
 		{ title: 'Wszystkie Przepisy', path: '/wszystkie-przepisy' }
 	];
-	// const handleclick = async () => {
-	// 	const response = await fetch('/api/logout', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json'
-	// 		}
-	// 	});
-	// 	if (response.ok) {
-	// 		logOut();
-	// 		await goto('/login');
-	// 	}
-	// };
 </script>
 
 <div class="navbar bg-base-100">

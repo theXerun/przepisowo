@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 	import LoginForm from '$lib/LoginForm.svelte';
-	import { logIn } from './stores';
 
 	let error: string;
 
@@ -17,7 +16,6 @@
 		});
 		const body = await response.json();
 		if (response.ok) {
-			logIn()
 			$session = body;
 			await goto('/');
 		}
