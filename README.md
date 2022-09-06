@@ -2,37 +2,40 @@
 
 Przepisowo to aplikacja pomagająca znaleźć przepisy kulinarne które możesz wykonać z składników dostępnych w twoim domu.
 
-## Creating a project
+Link do publicznego repozytorium
+https://github.com/theXerun/przepisowo
 
-If you're seeing this, you've probably already done this step. Congrats!
 
+## Wymagane Narzędzia
+- npm
+- baza danych postgres
+
+## Instalacja zależności
+
+Pakiety npm
 ```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
+npm install
 ```
+Aby baza danych zadziałała należy stworzyć plik `.env` a w nim
+```bash
+DATABASE_URL="postgresql://postgres:haslo@localhost:5432/postgres?schema=public"
+```
+Pliku nie uwzględniłem z powodów prywatności.
 
-## Developing
+Komenda do stworzenia bazy danych znajduje się w folderze 'DO BAZY DANYCH'.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+Uruchomić w środowisku dev można komendami:
 ```bash
 npm run dev
 
-# or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
+## Budowanie
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Zbudowaną wersję włączamy przez `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
