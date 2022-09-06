@@ -15,7 +15,7 @@
 		<div class="card w-72 h-72 bg-base-100 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{randomRecipe.recipeDescription}</h2>
-				<p>{randomRecipe.recipeDescription}</p>
+				<p>{randomRecipe.recipeSteps.slice(0, 100)}</p>
 				<div class="card-actions justify-end">
 					<a href="/przepis/{randomRecipe.recipeId}" class="btn btn-primary">Zrób ten przepis!</a>
 				</div>
@@ -28,7 +28,7 @@
 			<div class="card w-72 h-72 bg-base-100 shadow-xl">
 				<div class="card-body">
 					<h2 class="card-title">{recipe.recipeDescription}</h2>
-					<p>{recipe.recipeDescription}</p>
+					<p>{recipe.recipeSteps.slice(0, 100)}</p>
 					<div class="card-actions justify-end">
 						<a href="/przepis/{recipe.recipeId}" class="btn btn-primary">Zrób ten przepis!</a>
 					</div>

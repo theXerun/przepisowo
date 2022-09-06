@@ -57,9 +57,7 @@
 		selectedIngredientId = Number(selected.ingredientID);
 		if (selectedIngredients.find((e) => e.ingredientID === selectedIngredientId)) {
 			let index = selectedIngredients.findIndex((e) => e.ingredientID === selectedIngredientId);
-			console.log(index);
 			selectedIngredients[index].quantity = Number(selectedIngredientQuantity);
-			console.log(selectedIngredients);
 			return;
 		}
 
@@ -74,13 +72,52 @@
 
 		// inaczej kompilator nie ogarnia że się coś zmieniło
 		selectedIngredients = selectedIngredients;
+
 		errorText = '';
-		console.log(selectedIngredients);
 	};
 	const removeIngredient = (index: number) => {
 		selectedIngredients.splice(index, 1);
 		selectedIngredients = selectedIngredients;
 	};
+	const addRecipe = async () => {
+		if (!recipeTitle) {
+			errorText = "Wpisz tytuł przepisu";
+			return;
+		}
+		if (recipeTitle.length > 280) {
+			errorText = "Za długi tytuł";
+			return;
+		}
+		if (!recipeSteps) {
+			errorText = "Musisz napisać jak wykonać przepis";
+			return;
+		}
+		if(recipeSteps.length > 1024) {
+			errorText = "Zbyt długi opis wykonania przepisu";
+			return;
+		}
+		if (selectedIngredients.length == 0) {
+			errorText = "Dodaj składniki";
+			return;
+		}
+		errorText = "";
+
+		const response = await fetch('/dodaj-przepis', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({recipeTitle, recipeSteps, selectedIngredients})
+		});
+
+		selectedIngredients = selectedIngredients
+
+		if (response.ok) {
+			console.log("OK");
+			return;
+		}
+		console.log("NIE OK")
+	}
 </script>
 
 <main>
@@ -161,6 +198,6 @@
 		/>
 	</div>
     <div class="flex flex-row flex-wrap place-content-around content-center items-center justify-center pt-16">
-        <button class="btn btn-primary">Dodaj Przepis</button>
+        <button class="btn btn-primary" on:click|preventDefault={addRecipe}>Dodaj Przepis</button>
     </div>
 </main>
