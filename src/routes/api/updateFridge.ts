@@ -2,7 +2,7 @@ import { PrismaClient, type Ingredients, type Recipes } from "@prisma/client";
 import type { RequestHandler } from "@sveltejs/kit";
 const prisma = new PrismaClient();
 
-export const POST: RequestHandler =async ({params, request, locals}) => {
+export const POST: RequestHandler = async ( { request, locals } ) => {
     let userId: number = (!locals.user?.userId) ? 1 : locals.user.userId;
     const referedRecipeId: number = await request.json()
 
@@ -38,7 +38,6 @@ export const POST: RequestHandler =async ({params, request, locals}) => {
                 }
             }
         });
-        
     });
 
     return {
